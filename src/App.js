@@ -1,26 +1,39 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import { Switch, Route, Redirect } from 'react-router-dom'
+import Radium from 'radium'
+import HeroList from './containers/HeroList'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const styles = {
+    body: {
+        width: '100%',
+        height: '100vh',
+    },
 }
 
-export default App;
+const Heroes = props => {
+    return <div>choosed one heroe</div>
+}
+
+const HeroesProfile = props => {
+    return <div>HeroesProfile No {props.match.params.id}</div>
+}
+
+const NoMatch = props => {
+    return <div>no match {props.location.pathname}</div>
+}
+
+function App() {
+    return (
+        <div style={styles.body}>
+            <HeroList />
+            <Switch>
+                <Redirect exact from="/" to="/heroes" />
+                <Route exact path="/heroes" component={Heroes} />
+                <Route exact path="/heroes/:id" component={HeroesProfile} />
+                <Route component={NoMatch} />
+            </Switch>
+        </div>
+    )
+}
+
+export default Radium(App)
