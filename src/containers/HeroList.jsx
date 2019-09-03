@@ -23,7 +23,7 @@ class HeroList extends Component {
     }
 
     render() {
-        const { Heroes } = this.props
+        const { Heroes, HeroID } = this.props
         return (
             <div style={styles.HeroList}>
                 {Heroes.map((item, key) => (
@@ -33,6 +33,8 @@ class HeroList extends Component {
                             id: item.id,
                             name: item.name,
                             image: item.image,
+                            isActived:
+                                HeroID === parseInt(item.id) ? true : false,
                         }}
                     />
                 ))}
@@ -43,6 +45,7 @@ class HeroList extends Component {
 
 const mapStateToProps = state => ({
     Heroes: state.HeroList.HeroesInfo,
+    HeroID: state.HeroProfile.HeroID,
 })
 
 const mapDispatchToProps = dispatch =>
