@@ -18,13 +18,13 @@ const styles = {
 }
 
 const Heroes = props => {
-    return <div style={styles.Log}>choosed one heroe</div>
+    return <div style={styles.Log}>chosed one hero</div>
 }
 
 const NoMatch = props => {
     return (
         <Link style={styles.Log} to="/Heroes">
-            no match {props.location.pathname} To Home
+            no match {props.location.pathname} Back Home
         </Link>
     )
 }

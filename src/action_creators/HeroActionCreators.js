@@ -3,7 +3,7 @@ import {
     urlProfileHero,
     urlUpdateProfileHero,
 } from './API_HeroList'
-import { ErrorHandle, ShowLoading, HideLoading } from './GeneralActionCreators'
+import { ErrorHandle } from './GeneralActionCreators'
 export const GET_LIST_HEROES = 'GET/LIST_HEROES'
 export const GET_PROFILE_HERO = 'GET/PROFILE_HERO'
 export const SET_PROFILE_HERO_ID = 'SET/PROFILE_HERO_ID'
@@ -34,12 +34,9 @@ const patchProfileHeroSuccess = () => ({
 
 export const getListHeroes = input => async dispatch => {
     try {
-        dispatch(ShowLoading())
         const response = await fetch(urlListHeroes)
         dispatch(getListHeroesSuccess(await response.json()))
-        dispatch(HideLoading())
     } catch (error) {
-        dispatch(HideLoading())
         dispatch(
             ErrorHandle({
                 error: error,
@@ -51,13 +48,10 @@ export const getListHeroes = input => async dispatch => {
 
 export const getProfileHero = heroID => async dispatch => {
     try {
-        dispatch(ShowLoading())
         dispatch(setProfileHeroID(parseInt(heroID)))
         const response = await fetch(urlProfileHero(heroID))
         dispatch(getProfileHeroSuccess(await response.json()))
-        dispatch(HideLoading())
     } catch (error) {
-        dispatch(HideLoading())
         dispatch(
             ErrorHandle({
                 error: error,
@@ -73,7 +67,6 @@ export const patchProfileHero = (
     replaceFN
 ) => async dispatch => {
     try {
-        dispatch(ShowLoading())
         dispatch(setProfileHeroID(parseInt(heroID)))
         const response = await fetch(urlUpdateProfileHero(heroID), {
             body: JSON.stringify(heroData),
@@ -84,10 +77,7 @@ export const patchProfileHero = (
             replaceFN('/heroes')
             dispatch(patchProfileHeroSuccess())
         }
-        dispatch(HideLoading())
     } catch (error) {
-        console.log(error)
-        dispatch(HideLoading())
         dispatch(
             ErrorHandle({
                 error: error,
