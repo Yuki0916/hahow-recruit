@@ -20,13 +20,13 @@ const styles = {
 
 class LineInfo extends Component {
     render() {
-        const { Name, Value } = this.props
+        const { Name, Value, Add, Subtract } = this.props
         return (
             <div style={styles.Body}>
                 <span style={styles.Name}>{Name}</span>
-                <Button Title="+" />
+                <Button Title="+" CallbackFN={() => Add(Name)} />
                 <span style={styles.Value}>{Value}</span>
-                <Button Title="-" />
+                <Button Title="-" CallbackFN={() => Subtract(Name)} />
             </div>
         )
     }

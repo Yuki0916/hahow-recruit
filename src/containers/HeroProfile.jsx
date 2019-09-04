@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { bindActionCreators, compose } from 'redux'
 import Radium from 'radium'
@@ -33,7 +33,6 @@ class HeroProfile extends Component {
             },
             getProfileHero,
         } = this.props
-        console.log(`componentDidMount ${id}`)
         getProfileHero(id)
     }
 
@@ -45,15 +44,11 @@ class HeroProfile extends Component {
                 },
                 getProfileHero,
             } = this.props
-        console.log(`shouldComponentUpdate ${nextID} ${id}`)
         if (nextID !== id) {
             getProfileHero(nextID)
             return false
         }
         return true
-    }
-    componentDidUpdate(prevProps, prevState) {
-        console.log('componentDidUpdate')
     }
 
     render() {
@@ -62,24 +57,52 @@ class HeroProfile extends Component {
                 params: { id },
             },
             HeroProfile: {
+                Data,
                 Data: { agi, int, luk, str },
                 AddPoint,
             },
+            addHeroValue,
+            subtractHeroValue,
+            patchProfileHero,
+            history: { replace },
         } = this.props
 
         return (
             <div style={styles.body} to="/heroes">
                 <div>
-                    <LineInfo Name="STR" Value={str} />
-                    <LineInfo Name="INT" Value={int} />
-                    <LineInfo Name="AGI" Value={agi} />
-                    <LineInfo Name="LUK" Value={luk} />
+                    <LineInfo
+                        Name="STR"
+                        Value={str}
+                        Add={addHeroValue}
+                        Subtract={subtractHeroValue}
+                    />
+                    <LineInfo
+                        Name="INT"
+                        Value={int}
+                        Add={addHeroValue}
+                        Subtract={subtractHeroValue}
+                    />
+                    <LineInfo
+                        Name="AGI"
+                        Value={agi}
+                        Add={addHeroValue}
+                        Subtract={subtractHeroValue}
+                    />
+                    <LineInfo
+                        Name="LUK"
+                        Value={luk}
+                        Add={addHeroValue}
+                        Subtract={subtractHeroValue}
+                    />
                 </div>
 
                 <div style={styles.RightContainer}>
-                    <Link to="/heroes">回首頁</Link>
                     <div style={styles.AddPoint}>剩餘點數：{AddPoint}</div>
-                    <Button Title="儲存" Large />
+                    <Button
+                        Title="儲存"
+                        CallbackFN={() => patchProfileHero(id, Data, replace)}
+                        Large
+                    />
                 </div>
             </div>
         )
@@ -97,6 +120,7 @@ const enhance = compose(
         mapStateToProps,
         mapDispatchToProps
     ),
+    withRouter,
     Radium
 )
 export default enhance(HeroProfile)

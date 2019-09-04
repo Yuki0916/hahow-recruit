@@ -19,7 +19,12 @@ class Button extends Component {
     render() {
         const { Title, CallbackFN, Large } = this.props
         return (
-            <span style={[styles.Button, Large && styles.Large]}>{Title}</span>
+            <span
+                style={[styles.Button, Large && styles.Large]}
+                onClick={CallbackFN}
+            >
+                {Title}
+            </span>
         )
     }
 }
